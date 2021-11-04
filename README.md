@@ -9,14 +9,13 @@ Recommender Systems have been around for quite some time. These systems provide 
 
 
 As depicted in the figure below, a user is involved in both the item and social spaces of a social recommender system. The user-item space denotes the interactions between a user and items, whereas the user-user space captures the friendships amongst users.
-
 ![user-item-user-fig](https://user-images.githubusercontent.com/24585616/140293799-dc0f602f-d083-4b19-82fd-edd42b88544b.png)
 
 
 Furthermore, the aim of our work is to utilise user reviews in a social recommender system. Thus, we propose to add a user-review space to learn item latent factors. As shown in the figure below, an item may have multiple reviews from many users.
+![user-review](https://user-images.githubusercontent.com/24585616/140305877-af9df60c-a21a-4232-b6b6-720773638e1f.png)
 
 
-< Insert figure here >
 
 ## Proposed Model: RevNet
 
