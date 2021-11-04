@@ -14,17 +14,19 @@ Recommender systems have become increasingly popular in the online domain and pl
 
 
 # Environment Settings
-* Python: 3.9
-* Argparse
-* Gensim
-* Keras
-* Matplotlib
-* NLTK
-* Numpy
-* Pandas
-* Pydot
-* Sci-kit Learn
-* Tensorflow
+* `Python`: 3.9
+* `Keras`: 
+* `Gensim`: 
+
+* Other Libraries needed:
+  * `Argparse`
+  * `Matplotlib`
+  * `NLTK`
+  * `Numpy`
+  * `Pandas`
+  * `Pydot`
+  * `Sci-kit Learn`
+  * `Tensorflow`
 
 # Dataset
 * Users: https://drive.google.com/file/d/1P2EIB6fJFqSXL6R3NQ1HW6uO9tL_VCHO/view?usp=sharing
