@@ -36,12 +36,12 @@ Furthermore, the aim of our work is to utilise user reviews in a social recommen
   * Tensorflow
 
 ## Dataset
-Ensure that the dataset files are stored in the parent directory `../`. 
-* Users: https://drive.google.com/file/d/1P2EIB6fJFqSXL6R3NQ1HW6uO9tL_VCHO/view?usp=sharing
-* Businesses: https://drive.google.com/file/d/1Ccg_4U4Md_bjUE8AtaWbzGOaldGZ0v0b/view?usp=sharing
-* Reviews: https://drive.google.com/file/d/13SNDU5v3d3TDNluINVTeKDcP1VXQA3dm/view?usp=sharing
+The Yelp dataset was used. In particular, we are interested in the user, business and reviews dataset files. Ensure that the dataset files are stored in the parent directory `../`. 
+* User Dataset File: https://drive.google.com/file/d/1P2EIB6fJFqSXL6R3NQ1HW6uO9tL_VCHO/view?usp=sharing
+* Business Dataset File: https://drive.google.com/file/d/1Ccg_4U4Md_bjUE8AtaWbzGOaldGZ0v0b/view?usp=sharing
+* Review Dataset File: https://drive.google.com/file/d/13SNDU5v3d3TDNluINVTeKDcP1VXQA3dm/view?usp=sharing
 
-* `Alternatively, you can download the complete Yelp dataset here:` https://www.yelp.com/dataset/download
+* `Alternatively, you can download the complete dataset here:` https://www.yelp.com/dataset/download
 
 ## Running the Code
 The code is structured in a way that allows for model hyper parameter variation. To run the model with a default set of parameters, execute the following command into your machines terminal
