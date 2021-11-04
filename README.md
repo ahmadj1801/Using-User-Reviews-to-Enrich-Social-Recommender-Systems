@@ -22,8 +22,8 @@ Furthermore, the aim of our work is to utilise user reviews in a social recommen
 
 ## Environment Settings
 * `Python`: 3.9
-* `Keras`: 
-* `Gensim`: 
+* `Keras`: 2.5.0
+* `Gensim`: 4.0.1
 
 ### Other Libraries needed:
   * Argparse
