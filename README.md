@@ -27,14 +27,14 @@ Furthermore, the aim of our work is to utilise user reviews in a social recommen
 * `Gensim`: 
 
 ### Other Libraries needed:
-  * `Argparse`
-  * `Matplotlib`
-  * `NLTK`
-  * `Numpy`
-  * `Pandas`
-  * `Pydot`
-  * `Sci-kit Learn`
-  * `Tensorflow`
+  * Argparse
+  * Matplotlib
+  * NLTK
+  * Numpy
+  * Pandas
+  * Pydot
+  * Sci-kit Learn
+  * Tensorflow
 
 ## Dataset
 Ensure that the dataset files are stored in the `Data` directory. 
