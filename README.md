@@ -34,6 +34,7 @@ Recommender systems have become increasingly popular in the online domain and pl
 * Reviews: https://drive.google.com/file/d/13SNDU5v3d3TDNluINVTeKDcP1VXQA3dm/view?usp=sharing
 
 * `Alternatively, you can download the complete Yelp dataset here:` https://www.yelp.com/dataset/download 
+Ensure that the dataset files are stored in the `Output` directory. 
 
 # Running the Code
 
