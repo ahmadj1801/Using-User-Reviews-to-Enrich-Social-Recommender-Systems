@@ -1,5 +1,7 @@
-# RevNet: Using-User-Reviews-to-Enrich-Social-Recommender-Systems
-This is an implementation which seeks to utilise user reviews in a social recommender for ratings prediction.
+# Using-User-Reviews-to-Enrich-Social-Recommender-Systems
+
+## RevNet
+RevNet is a novel deep neural network architecture that utilises user reviews in a social recommender system, of which, its main goal being rating prediction.
 
 ## Abstract
 Recommender systems have become increasingly popular in the online domain and play a critical role in suggesting information of interest to users. Various techniques have been explored while implementing these systems, such as collaborative filtering, content-based and preference-based solutions. In recent times, personal data has become ubiquitous and has prompted researchers to explore avenues that use user reviews on items of interest and social relationships to improve output recommendations. Furthermore, to the foregoing, the immense interest in Neural Networks has provided a platform for applying deep learning techniques to improve existing recommender system solutions. In this paper, we present a novel deep neural network framework (RevNet) for social recommendations through the utilization of user reviews. The model captures the user-user and user-item spaces typically found in a social recommender, as well as adds another dimension in the form of a user-review space. Experimentation on a real-world dataset, the Yealp dataset, is done, in order to measure the effectiveness of the model.
@@ -9,12 +11,15 @@ Recommender Systems have been around for quite some time. These systems provide 
 
 
 As depicted in the figure below, a user is involved in both the item and social spaces of a social recommender system. The user-item space denotes the interactions between a user and items, whereas the user-user space captures the friendships amongst users.
+
+
 ![user-item-user-fig](https://user-images.githubusercontent.com/24585616/140293799-dc0f602f-d083-4b19-82fd-edd42b88544b.png)
 
 
 Furthermore, the aim of our work is to utilise user reviews in a social recommender system. Thus, we propose to add a user-review space to learn item latent factors. As shown in the figure below, an item may have multiple reviews from many users.
-![user-review](https://user-images.githubusercontent.com/24585616/140305877-af9df60c-a21a-4232-b6b6-720773638e1f.png)
 
+
+![user-review](https://user-images.githubusercontent.com/24585616/140305877-af9df60c-a21a-4232-b6b6-720773638e1f.png)
 
 
 ## Proposed Model: RevNet
