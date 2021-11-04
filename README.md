@@ -33,6 +33,8 @@ Recommender systems have become increasingly popular in the online domain and pl
 * Businesses: https://drive.google.com/file/d/1Ccg_4U4Md_bjUE8AtaWbzGOaldGZ0v0b/view?usp=sharing
 * Reviews: https://drive.google.com/file/d/13SNDU5v3d3TDNluINVTeKDcP1VXQA3dm/view?usp=sharing
 
+* Alternatively, you can download the complete Yelp dataset her `https://www.yelp.com/dataset/download` 
+
 # Running the Code
 
 # Acknoledgements
