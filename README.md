@@ -1,12 +1,7 @@
-# Using-User-Reviews-to-Enrich-Social-Recommender-Systems
-Using User Reviews to Enrich Social Recommender Systems
+# RevNet: Using-User-Reviews-to-Enrich-Social-Recommender-Systems
+This is an implementation which seeks to utilise user reviews in a social recommender for ratings prediction.
 
-# TODO
-* Add Comments
-* Remove Unecessary methods from the DatasetLoader
-* Add Write Up
-* Update ReadMe
-* Create a User Manual
+# Abstract
 
 # Dataset
 * Users: https://drive.google.com/file/d/1P2EIB6fJFqSXL6R3NQ1HW6uO9tL_VCHO/view?usp=sharing
