@@ -36,7 +36,7 @@ Furthermore, the aim of our work is to utilise user reviews in a social recommen
   * Tensorflow
 
 ## Dataset
-Ensure that the dataset files are stored in the `Data` directory. 
+Ensure that the dataset files are stored in the parent directory `../`. 
 * Users: https://drive.google.com/file/d/1P2EIB6fJFqSXL6R3NQ1HW6uO9tL_VCHO/view?usp=sharing
 * Businesses: https://drive.google.com/file/d/1Ccg_4U4Md_bjUE8AtaWbzGOaldGZ0v0b/view?usp=sharing
 * Reviews: https://drive.google.com/file/d/13SNDU5v3d3TDNluINVTeKDcP1VXQA3dm/view?usp=sharing
@@ -51,6 +51,9 @@ The code is structured in a way that allows for model hyper parameter variation.
 To run the model with custom hyper paramaters, the following format should be adhered to
 * `python application.py --parameter1 <value>`
 * `python application.py --epochs 50 --batch_size 128 --d2v_vec_size 256`
+
+### Note to User
+* The training of the model may cause substantial memory usage in the case that you experiment with the `--users` and `--reviews` hyper paramaters. As such, ensure that you have in excess of 8GB of RAM when deviating from the default parameter values. 
 
 ## Acknowledgements
 
