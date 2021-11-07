@@ -1,7 +1,7 @@
 # Using-User-Reviews-to-Enrich-Social-Recommender-Systems
 
 ## RevNet
-RevNet is a novel deep neural network architecture that utilises user reviews in a social recommender system, of which, its main goal being rating prediction.
+RevNet is a novel deep neural network architecture that utilises user reviews in a social recommender system, of which, its main goal is rating prediction.
 
 ## Abstract
 Recommender systems have become increasingly popular in the online domain and play a critical role in suggesting information of interest to users. Various techniques have been explored while implementing these systems, such as collaborative filtering, content-based and preference-based solutions. In recent times, personal data has become ubiquitous and has prompted researchers to explore avenues that use user reviews on items of interest and social relationships to improve output recommendations. Furthermore, to the foregoing, the immense interest in Neural Networks has provided a platform for applying deep learning techniques to improve existing recommender system solutions. In this paper, we present a novel deep neural network framework (RevNet) for social recommendations through the utilization of user reviews. The model captures the user-user and user-item spaces typically found in a social recommender, as well as adds another dimension in the form of a user-review space. Experimentation on a real-world dataset, the Yealp dataset, is done, in order to measure the effectiveness of the model.
