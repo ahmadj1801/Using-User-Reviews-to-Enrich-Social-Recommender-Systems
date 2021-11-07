@@ -23,6 +23,9 @@ Furthermore, the aim of our work is to utilise user reviews in a social recommen
 
 
 ## Proposed Model: RevNet
+The proposed model contains three main components i.e., user modelling, item modelling and rating prediction. Furthermore, we derive latent representations from the user modelling and item modelling components, via their respective spaces. User modelling seeks to understand users better, thus we facilitate this via the user-item and user-user spaces. Regarding user-item interactions, we propose appropriate embeddings to capture a user’s opinion on an item. Furthermore, as in a typical social recommender system, the social relationships are considered. This is done to model users from the social perspective. The outputs obtained from each of these spaces represent item user latent factors (hIi) and social user latent factors (hSi), respectively. We choose not to combine the obtained user latent factors into a single user latent factor representation. The second component of the proposed architecture is item modelling. This is done through the consideration of text reviews and user opinion on items. Thus, we receive a latent factor representation (hRi) for the items. Lastly, to facilitate rating prediction, we combine user and item modelling latent factor representations through concatenation, which is thereafter fed into subsequent neural network layers.
+
+![Neural Model Diagram](https://user-images.githubusercontent.com/24585616/140664563-58bffeb2-157b-404a-86ed-925892a30a56.png)
 
 
 ## Environment Settings
