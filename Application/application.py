@@ -180,7 +180,7 @@ def social_recommender(n_users, n_items):
     model.compile(optimizer=adam, loss='mean_squared_error',
                   metrics=['MAE', 'RootMeanSquaredError', 'accuracy'])
 
-    plot_model(model, to_file="Output/model.png")
+    plot_model(model, to_file="../Output/model.png")
 
     return model
 
@@ -234,13 +234,13 @@ def graph_metric(model, metric):
     plt.xlabel('epoch')
     plt.xlabel(metric)
     plt.legend(['Training', 'Validation'], loc='upper left')
-    plt.savefig('Output/' + metric + '.png')
+    plt.savefig('../Output/' + metric + '.png')
     plt.show()
     plt.clf()
 
 
 def parameters_to_file():
-    file = open('Output/parameters.txt', 'w+')
+    file = open('../Output/parameters.txt', 'w+')
     file.write('\n== Data Parameters ==')
     file.write('\nNumber of Users: ' + str(USERS))
     file.write('\nNumber of Reviews: ' + str(REVIEWS))
@@ -478,11 +478,11 @@ def main():
                                  test_reviews, test.recommendable], test.stars,
                                 batch_size=BATCH_SIZE)
 
-    file = open('Output/results.txt', 'w+')
+    file = open('../Output/results.txt', 'w+')
     file.write("Accuracy = " + str(calculate_accuracy(predictions, test.stars.tolist()) * 100))
     # print('Accuracy = {}%'.format(calculate_accuracy(predictions, test.stars.tolist()) * 100))
     for i in range(len(model.metrics_names)):
-        file.write(model.metrics_names[i] + " = " + str(evaluation[i]))
+        file.write("\n" + model.metrics_names[i] + " = " + str(evaluation[i]))
         print("{} = {}".format(model.metrics_names[i], evaluation[i]))
 
 
