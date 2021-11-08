@@ -45,15 +45,10 @@ DROPOUT = 0.2
 
 '''DOC2VEC Model Parameters'''
 D2V_EPOCHS = 1
-VEC_SIZE = 64
+VEC_SIZE = 64  # For DOC2VEC training
 DM = 1
 
-
 def get_sentiment(star):
-    """
-    Given a star rating, calculate the sentiment
-    star: rating  [1, 5]
-    """
     if star == 3:
         return 0
     elif star < 3:
@@ -61,12 +56,7 @@ def get_sentiment(star):
     else:
         return 1
 
-
 def get_recommendable(star):
-    """
-    Given a star rating, calculate if an item is recommendable
-    star: rating [1, 5]
-    """
     if star > 3:
         return 1
     else:
@@ -74,44 +64,35 @@ def get_recommendable(star):
 
 
 def social_recommender(n_users, n_items):
-    """
-    Neural Model
-    """
     business_input = business_vec = Input(shape=[1], name="Business-Input")
     business_embedding = Embedding(n_items + 1, 100, name="Business-Embedding")(business_input)
     business_vec = Flatten(name="Flatten-Business")(business_embedding)
 
-    """User Embedding"""
+    # creating user embedding path
     user_input = user_vec = Input(shape=[1], name="User-Input")
     user_embedding = Embedding(n_users + 1, 100, name="User-Embedding")(user_input)
     user_vec = Flatten(name="Flatten-Users")(user_embedding)
 
-    """Sentiment Input"""
     sentiment_input = sentiment_vec = Input(shape=[1], name="Sentiment-Input")
     # sentiment_embedding = Embedding(3, 100, name="Sentiment-Embedding")(sentiment_input)
     sentiment_vec = Flatten(name="Flatten-Sentiment")(sentiment_input)  # (sentiment_embedding)
 
-    """Friendship Input"""
     friendship_input = Input(shape=(VEC_SIZE,), name="Friendship-Input")
     # friendship_embedding = Embedding(2, 100, name="Friendship-Embedding")(friendship_input)
     friendship_vec = Flatten(name="Flatten-Friendship")(friendship_input)
 
-    """Embedding of average rating by user"""
     average_rating_input = Input(shape=[1], name="Average-Rating-Input")
     average_rating_embedding = Embedding(6, 100, name="Average-Rating-Embedding")(average_rating_input)
     average_vec = Flatten(name="Flatten-Average")(average_rating_embedding)
 
-    """Recommendable Embedding"""
     recommendable_input = recommendable_vec = Input(shape=[1], name="Recommendable-Input")
     recommendable_embedding = Embedding(10, 256, name="Recommendable-Embedding")(recommendable_input)
     recommendable_vec = Flatten(name="Flatten-Recommendable")(recommendable_embedding)
 
-    """Review Input - Doc2Vec"""
     review_input = review_vec = Input(shape=(VEC_SIZE,), name="Review-Input")
     # review_embedding = Embedding(input_dim=VEC_SIZE, output_dim=256)(review_input)
     review_vec = Flatten(name="Flatten-Review")(review_input)  # (review_embedding)
 
-    """Initial Dense layer with Dropout applied"""
     business_dense = Dense(256, activation=LeakyReLU(alpha=LEAKY_ALPHA), use_bias=True)(business_vec)
     business_dense = Dropout(DROPOUT)(business_dense)
     user_dense = Dense(256, activation=LeakyReLU(alpha=LEAKY_ALPHA), use_bias=True)(user_vec)
@@ -127,9 +108,10 @@ def social_recommender(n_users, n_items):
     review_dense = Dense(256, activation=LeakyReLU(alpha=LEAKY_ALPHA), use_bias=True)(review_vec)
     review_dense = Dropout(DROPOUT)(review_dense)
 
-    """User-Item Space - Learn User latent"""
+    # concatenate features
     conc1 = Concatenate()([business_dense, user_dense, sentiment_dense])
 
+    # add fully-connected-layers
     fc1_1 = Dense(128, activation=LeakyReLU(alpha=LEAKY_ALPHA))(conc1)
     fc2_1 = Dense(64, activation=LeakyReLU(alpha=LEAKY_ALPHA))(fc1_1)
     fc3_1 = Dense(32, activation=LeakyReLU(alpha=LEAKY_ALPHA))(fc2_1)
@@ -137,9 +119,10 @@ def social_recommender(n_users, n_items):
     fc5_1 = Dense(8, activation=LeakyReLU(alpha=LEAKY_ALPHA))(fc4_1)
     out_1 = Dense(4)(fc5_1)
 
+    # Create model and compile it
     model1 = Model([business_input, user_input, sentiment_input], out_1)
 
-    """Social Space: User-User - Learn user latent"""
+    # SOCIAL SPACE
     conc2 = Concatenate()([user_dense, friendship_dense, average_dense])
     fc1_2 = Dense(128, activation=LeakyReLU(alpha=LEAKY_ALPHA))(conc2)
     fc2_2 = Dense(64, activation=LeakyReLU(alpha=LEAKY_ALPHA))(fc1_2)
@@ -150,7 +133,6 @@ def social_recommender(n_users, n_items):
 
     model2 = Model([user_input, friendship_input, average_rating_input], out_2)
 
-    """User-Review Space - learn item latent"""
     conc3 = Concatenate()([user_dense, business_dense, recommendable_dense, review_dense])
 
     # add fully-connected-layers
@@ -163,35 +145,29 @@ def social_recommender(n_users, n_items):
 
     model3 = Model([business_input, user_input, recommendable_input, review_input], out_3)
 
-    """Concatenation of latent factors"""
+    """item_space = Concatenate()([model1.output, model2.output])
+    user_latent = Dense(4, activation=LeakyReLU(alpha=LEAKY_ALPHA))(item_space)
+    model2_1 = Model([user_input, business_input, sentiment_input, friendship_input, average_rating_input],
+                     user_latent)"""
+
     combined = Concatenate()([model1.output, model2.output, model3.output])
 
-    """Final Layers using the latent representation"""
     z = Dense(4, activation=LeakyReLU(alpha=LEAKY_ALPHA))(combined)
     output = Dense(1, activation=LeakyReLU(alpha=LEAKY_ALPHA))(z)
 
     model = Model([user_input, business_input, sentiment_input, friendship_input, average_rating_input,
                    review_input, recommendable_input], output)
 
-    """Adam Optimizer"""
     adam = Adam(learning_rate=LR)
 
-    """Compiled model with MSE loss"""
     model.compile(optimizer=adam, loss='mean_squared_error',
                   metrics=['MAE', 'RootMeanSquaredError', 'accuracy'])
 
-    plot_model(model, to_file="Output/model.png")
+    plot_model(model, to_file="model.png")
 
     return model
 
-
 def calculate_accuracy(predictions, truth):
-    """
-    Calculates accuracy of the model with modified ratings
-    predictions: Rounded values from the model
-    truth: Actual rating provided from ui for vj
-    returns: % correct
-    """
     correct = 0
     for i in range(len(predictions)):
         prediction = round(predictions[i][0])
@@ -201,12 +177,6 @@ def calculate_accuracy(predictions, truth):
 
 
 def get_doc2vec_vectors(doc2vec_model, ids):
-    """
-    Retrives the doc2vec vectors
-    doc2vec_model: Doc2Vec Model
-    ids: list of ID's to identify doc2vec vector
-    retuns: List of doc2vec vectors
-    """
     vectors = list()
     for i in range(len(ids)):
         id = str(ids[i])
@@ -214,7 +184,6 @@ def get_doc2vec_vectors(doc2vec_model, ids):
         vector = np.array(vector)
         vectors.append(vector)
     return vectors
-
 
 def get_friendships(friends, all_users):
     encoded_friends = to_categorical(friends, num_classes=len(all_users) + 1, dtype=np.int)
@@ -225,9 +194,6 @@ def get_friendships(friends, all_users):
 
 
 def graph_metric(model, metric):
-    """
-    Code to compute graphical output
-    """
     plt.plot(model.history[metric])
     plt.plot(model.history['val_' + metric])
     plt.title('Model ' + metric)
@@ -409,7 +375,9 @@ def main():
     """
 
     list_of_reviews = reviews['text'].tolist()
+    # print(list_of_reviews)
     clean_reviews = dataset.clean_reviews(list_of_reviews)
+    # print(clean_reviews)
 
     """
     Obtain a sentiment for the review.
@@ -427,6 +395,9 @@ def main():
     reviews['recommendable'] = [get_recommendable(x) for x in reviews['stars']]
 
     max_id = max(list(unique_users))
+
+    # print(clean_reviews)
+    # print(all_users_with_friends)
 
     '''DOC2VEC MODEL'''
     review_ids = reviews['review_id'].tolist()

@@ -163,7 +163,7 @@ class DatasetLoader:
 
         for epoch in range(epochs):
             print('Epoch {}'.format(epoch))
-            model.train(tagged_data, total_examples=model.corpus_count, epochs=model.epochs)#, epochs=model.iter)
+            model.train(tagged_data, total_examples=model.corpus_count, epochs=model.epochs)
             model.alpha -= 0.0002
             model.min_alpha = model.alpha
         model.save(model_name)
@@ -179,7 +179,7 @@ class DatasetLoader:
         model.build_vocab(tagged_data)
         for epoch in range(epochs):
             print('Epoch {}'.format(epoch))
-            model.train(tagged_data, total_examples=model.corpus_count, epochs=model.epochs)#, epochs=model.iter)
+            model.train(tagged_data, total_examples=model.corpus_count, epochs=model.epochs)
             model.alpha -= 0.0002
             model.min_alpha = model.alpha
         model.save(model_name)
