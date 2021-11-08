@@ -399,8 +399,8 @@ def main():
     user2vec_model = Doc2Vec.load(user2vec_model)
     friend_vectors = get_doc2vec_vectors(user2vec_model, reviews['user_id'].tolist())
 
-    reviews['doc2vec'] = vectors
-    # reviews['friends'] = friend_vectors
+    # reviews['doc2vec'] = vectors
+    reviews['friends'] = friend_vectors
 
     # Train and testing portions
     train, test = train_test_split(reviews, test_size=TEST_SIZE, random_state=42)
