@@ -105,8 +105,8 @@ def social_recommender(n_users, n_items):
     average_dense = Dropout(DROPOUT)(average_dense)
     recommendable_dense = Dense(256, activation=LeakyReLU(alpha=LEAKY_ALPHA), use_bias=True)(recommendable_vec)
     recommendable_dense = Dropout(DROPOUT)(recommendable_dense)
-    review_dense = Dense(256, activation=LeakyReLU(alpha=LEAKY_ALPHA), use_bias=True)(review_vec)
-    review_dense = Dropout(DROPOUT)(review_dense)
+    '''review_dense = Dense(256, activation=LeakyReLU(alpha=LEAKY_ALPHA), use_bias=True)(review_vec)
+    review_dense = Dropout(DROPOUT)(review_dense)'''
 
     # concatenate features
     conc1 = Concatenate()([business_dense, user_dense, sentiment_dense])
