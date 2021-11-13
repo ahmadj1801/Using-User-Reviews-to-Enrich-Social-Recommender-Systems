@@ -77,7 +77,7 @@ def social_recommender(n_users, n_items):
     # sentiment_embedding = Embedding(3, 100, name="Sentiment-Embedding")(sentiment_input)
     sentiment_vec = Flatten(name="Flatten-Sentiment")(sentiment_input)  # (sentiment_embedding)
 
-    friendship_input = Input(shape=(VEC_SIZE,), name="Friendship-Input")
+    '''friendship_input = Input(shape=(VEC_SIZE,), name="Friendship-Input")
     # friendship_embedding = Embedding(2, 100, name="Friendship-Embedding")(friendship_input)
     friendship_vec = Flatten(name="Flatten-Friendship")(friendship_input)
 
@@ -87,7 +87,7 @@ def social_recommender(n_users, n_items):
 
     recommendable_input = recommendable_vec = Input(shape=[1], name="Recommendable-Input")
     recommendable_embedding = Embedding(10, 256, name="Recommendable-Embedding")(recommendable_input)
-    recommendable_vec = Flatten(name="Flatten-Recommendable")(recommendable_embedding)
+    recommendable_vec = Flatten(name="Flatten-Recommendable")(recommendable_embedding)'''
 
     """review_input = review_vec = Input(shape=(VEC_SIZE,), name="Review-Input")
     # review_embedding = Embedding(input_dim=VEC_SIZE, output_dim=256)(review_input)
@@ -99,13 +99,13 @@ def social_recommender(n_users, n_items):
     user_dense = Dropout(DROPOUT)(user_dense)
     sentiment_dense = Dense(256, activation=LeakyReLU(alpha=LEAKY_ALPHA), use_bias=True)(sentiment_vec)
     sentiment_dense = Dropout(DROPOUT)(sentiment_dense)
-    friendship_dense = Dense(256, activation=LeakyReLU(alpha=LEAKY_ALPHA), use_bias=True)(friendship_vec)
+    '''friendship_dense = Dense(256, activation=LeakyReLU(alpha=LEAKY_ALPHA), use_bias=True)(friendship_vec)
     friendship_dense = Dropout(DROPOUT)(friendship_dense)
     average_dense = Dense(256, activation=LeakyReLU(alpha=LEAKY_ALPHA))(average_vec)
     average_dense = Dropout(DROPOUT)(average_dense)
     recommendable_dense = Dense(256, activation=LeakyReLU(alpha=LEAKY_ALPHA), use_bias=True)(recommendable_vec)
     recommendable_dense = Dropout(DROPOUT)(recommendable_dense)
-    '''review_dense = Dense(256, activation=LeakyReLU(alpha=LEAKY_ALPHA), use_bias=True)(review_vec)
+    review_dense = Dense(256, activation=LeakyReLU(alpha=LEAKY_ALPHA), use_bias=True)(review_vec)
     review_dense = Dropout(DROPOUT)(review_dense)'''
 
     # concatenate features
@@ -122,24 +122,10 @@ def social_recommender(n_users, n_items):
     # Create model and compile it
     model1 = Model([business_input, user_input, sentiment_input], out_1)
 
-    # SOCIAL SPACE
-    conc2 = Concatenate()([user_dense, friendship_dense, average_dense])
-    fc1_2 = Dense(128, activation=LeakyReLU(alpha=LEAKY_ALPHA))(conc2)
-    fc2_2 = Dense(64, activation=LeakyReLU(alpha=LEAKY_ALPHA))(fc1_2)
-    fc3_2 = Dense(32, activation=LeakyReLU(alpha=LEAKY_ALPHA))(fc2_2)
-    fc4_2 = Dense(16, activation=LeakyReLU(alpha=LEAKY_ALPHA))(fc3_2)
-    fc5_2 = Dense(8, activation=LeakyReLU(alpha=LEAKY_ALPHA))(fc4_2)
-    out_2 = Dense(4)(fc5_2)
-
-    model2 = Model([user_input, friendship_input, average_rating_input], out_2)
-
-    combined = Concatenate()([model1.output, model2.output])
-
-    z = Dense(4, activation=LeakyReLU(alpha=LEAKY_ALPHA))(combined)
+    z = Dense(4, activation=LeakyReLU(alpha=LEAKY_ALPHA))(model1.out)
     output = Dense(1, activation=LeakyReLU(alpha=LEAKY_ALPHA))(z)
 
-    model = Model([user_input, business_input, sentiment_input, friendship_input, average_rating_input,
-                   recommendable_input], output)
+    model = Model([user_input, business_input, sentiment_input], output)
 
     adam = Adam(learning_rate=LR)
 
@@ -331,7 +317,7 @@ def main():
     # print(averages.columns)
     # averages.columns = ['stars_mean']
 
-    review_users = reviews['user_id'].tolist()
+    '''review_users = reviews['user_id'].tolist()
     data = list()
     for user in review_users:
         star = averages.loc[user].tolist()[0]
@@ -350,7 +336,7 @@ def main():
         else:
             f = np.asarray([user], dtype=str)
         f = ' '.join(map(str, f))
-        all_users_with_friends.append(f)
+        all_users_with_friends.append(f)'''
 
     """
     We can let the ID's be list_unique_users
@@ -393,22 +379,22 @@ def main():
     vectors = get_doc2vec_vectors(doc2vec_model, reviews['review_id'].tolist())'''
 
     """User 2 Vec Model - Removed -> list_unique_users"""
-    user2vec_model = dataset.user2vec_model((reviews['user_id'].unique()).tolist(), all_users_with_friends, epochs=1, vec_size=VEC_SIZE, dm=1)
+    '''user2vec_model = dataset.user2vec_model((reviews['user_id'].unique()).tolist(), all_users_with_friends, epochs=1, vec_size=VEC_SIZE, dm=1)
     # user2vec_model = "user2vec.model"
 
     user2vec_model = Doc2Vec.load(user2vec_model)
     friend_vectors = get_doc2vec_vectors(user2vec_model, reviews['user_id'].tolist())
 
     # reviews['doc2vec'] = vectors
-    reviews['friends'] = friend_vectors
+    reviews['friends'] = friend_vectors'''
 
     # Train and testing portions
     train, test = train_test_split(reviews, test_size=TEST_SIZE, random_state=42)
     # train_reviews = pd.DataFrame(train["doc2vec"].tolist())
     # test_reviews = pd.DataFrame(test["doc2vec"].tolist())
-    train_friends = pd.DataFrame(train["friends"].tolist())
-    test_friends = pd.DataFrame(test["friends"].tolist())
-    train_all_friends = pd.DataFrame(reviews["friends"].tolist())
+    # train_friends = pd.DataFrame(train["friends"].tolist())
+    # test_friends = pd.DataFrame(test["friends"].tolist())
+    # train_all_friends = pd.DataFrame(reviews["friends"].tolist())
 
     model = social_recommender(n_users=len(unique_users), n_items=len(business))
 
@@ -416,8 +402,7 @@ def main():
 
     early_stoppage = EarlyStopping(monitor='val_loss', mode='min', verbose=1, patience=20, min_delta=0.01)
 
-    history = model.fit([train.user_id, train.business_id, train.sentiment, train_friends, train.average_star,
-                         train.recommendable], train.stars, validation_split=VALIDATION_SPLIT,
+    history = model.fit([train.user_id, train.business_id, train.sentiment], train.stars, validation_split=VALIDATION_SPLIT,
                         batch_size=BATCH_SIZE, epochs=EPOCHS, verbose=1, callbacks=[early_stoppage])
 
     graph_metric(history, 'accuracy')
@@ -425,11 +410,9 @@ def main():
     graph_metric(history, 'MAE')
     graph_metric(history, 'root_mean_squared_error')
 
-    predictions = model.predict([test.user_id, test.business_id, test.sentiment, test_friends, test.average_star,
-                                 test.recommendable])
+    predictions = model.predict([test.user_id, test.business_id, test.sentiment])
 
-    evaluation = model.evaluate([test.user_id, test.business_id, test.sentiment, test_friends, test.average_star,
-                                 test.recommendable], test.stars,
+    evaluation = model.evaluate([test.user_id, test.business_id, test.sentiment], test.stars,
                                 batch_size=BATCH_SIZE)
 
     file = open('../Output/results.txt', 'w+')
