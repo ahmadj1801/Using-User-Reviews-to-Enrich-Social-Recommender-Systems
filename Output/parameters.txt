@@ -1,0 +1,17 @@
+
+== Data Parameters ==
+Number of Users: 1000
+Number of Reviews: 10000
+== Training Splits ==
+Test Split: 0.2
+Validation Split: 0.05
+== Neural Network Parameters ==
+Epochs: 100
+Dropout Rate: 0.2
+Learning Rate: 0.001
+Leaky ReLu Alpha: 0.1
+Batch Size: 256
+== Doc2Vec Parameters ==
+Epochs: 20
+Approach: 1
+Embedding Dimension: 64
