@@ -86,6 +86,7 @@ To run the model with custom hyper paramaters, the following format should be ad
 * The training of the model may cause substantial memory usage in the case that you experiment with the `--users` and `--reviews` hyper paramaters. As such, ensure that you have in excess of 8GB of RAM when deviating from the default parameter values. 
 
 ## Acknowledgements
+Refer to the paper within the Report directory
 
 ## References
 * [1] Q. Zhang, J. Lu, and Y. Jin, “Artificial intelligence in recommender systems,” Complex & Intelligent Systems, vol. 7, no. 1, pp. 439–457, Nov. 2020, doi: 10.1007/s40747-020-00212-w.
